@@ -1,5 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
 import { apiVersion, authenticate } from "../shopify.server";
+import { Card, Layout, List, Page } from "@shopify/polaris";
 
 export const query = `
   query {
@@ -59,16 +60,22 @@ const Products = () => {
   console.log("Products:", products);
 
   return (
-    <div>
-      <h1>Products</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <strong>{product.title}</strong> — {product.description}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Page>
+      <Layout>
+        <Layout.Section>
+          <Card>
+            <List type="bullet" gap="loose">
+              {products?.map((product) => (
+                <List.Item key={product.id}>
+                  <h2>{product.title}</h2>
+                  <h2>{product.description}</h2>
+                </List.Item>
+              ))}
+            </List>
+          </Card>
+        </Layout.Section>
+      </Layout>
+    </Page>
   );
 };
 
